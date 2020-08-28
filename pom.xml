@@ -13,14 +13,71 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.3.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
         <java.version>11</java.version>
+        <springdoc.version>1.4.4</springdoc.version>
+        <embedded-redis.version>0.6</embedded-redis.version>
+        <rest-assured.version>2.9.0</rest-assured.version>
     </properties>
 
     <modules>
         <module>redis-service-web</module>
+        <module>redis-service-web-functional-tests</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.odis</groupId>
+                <artifactId>redis-service-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.kstyrc</groupId>
+                <artifactId>embedded-redis</artifactId>
+                <version>${embedded-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.restassured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${rest-assured.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <configuration>
+                                <classifier>exec</classifier>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springdoc</groupId>
+                    <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
 </project>

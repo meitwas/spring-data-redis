@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static com.jayway.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StudentControllerTest extends BaseTest {
+class StudentControllerTest extends BaseTest {
 
     private static final Student STUDENT_1 = new Student("1", "Stephen", 48);
     private static final Student STUDENT_2 = new Student("2", "Macaulay", 40);
@@ -24,7 +24,8 @@ public class StudentControllerTest extends BaseTest {
 
         var response = given().when()
                 .get("/get/1")
-                .then().log().all()
+                .then().assertThat().statusCode(200)
+                .log().all()
                 .extract().body()
                 .as(Student.class);
 
@@ -38,7 +39,8 @@ public class StudentControllerTest extends BaseTest {
 
         var response = given().when()
                 .get("/get")
-                .then().log().all()
+                .then().assertThat().statusCode(200)
+                .log().all()
                 .extract().body()
                 .as(Student[].class);
 
@@ -50,7 +52,8 @@ public class StudentControllerTest extends BaseTest {
         var response = given().contentType(ContentType.JSON)
                 .body(STUDENT_1).when()
                 .post("/save")
-                .then().log().all()
+                .then().assertThat().statusCode(200)
+                .log().all()
                 .extract().body()
                 .as(Student.class);
 
@@ -64,7 +67,8 @@ public class StudentControllerTest extends BaseTest {
 
         given().when()
                 .delete("/delete/1")
-                .then().log().all()
+                .then().assertThat().statusCode(200)
+                .log().all()
                 .extract();
 
         assertThat(studentService.find("1")).isEqualTo(new Student());

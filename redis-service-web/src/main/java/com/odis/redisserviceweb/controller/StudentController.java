@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @OpenAPIDefinition(info = @Info(title = "Redis web service REST API"))
@@ -21,6 +23,18 @@ public class StudentController {
     @Operation(summary = "Get student by Id")
     public Student find(@PathVariable String id) {
         return studentService.find(id);
+    }
+
+    @GetMapping("/get/filter/{name}")
+    @Operation(summary = "Get students by Name")
+    public List<Student> findByName(@PathVariable String name) {
+        return studentService.findAllByName(name);
+    }
+
+    @GetMapping("/get/filter/{name}/{age}")
+    @Operation(summary = "Get students by Name and Age")
+    public List<Student> findAllByNameAndAge(@PathVariable String name, @PathVariable int age) {
+        return studentService.findAllByNameAndAge(name, age);
     }
 
     @GetMapping("/get")

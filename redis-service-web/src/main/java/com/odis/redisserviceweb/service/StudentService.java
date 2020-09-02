@@ -4,6 +4,8 @@ import com.odis.redisserviceweb.model.Student;
 import com.odis.redisserviceweb.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class StudentService {
     private static final Student EMPTY_STUDENT = new Student();
@@ -17,6 +19,14 @@ public class StudentService {
 
     public Iterable<Student> findAll() {
         return studentRepository.findAll();
+    }
+
+    public List<Student> findAllByName(String name) {
+        return studentRepository.findAllByName(name);
+    }
+
+    public List<Student> findAllByNameAndAge(String name, int age) {
+        return studentRepository.findAllByNameAndAge(name, age);
     }
 
     public Student save(Student student) {

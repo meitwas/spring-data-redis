@@ -11,22 +11,18 @@ import redis.embedded.RedisServer;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RedisServiceWebApplication.class)
 public abstract class BaseTest {
 
-    private RedisServer redisServer;
+    protected RedisServer redisServer;
 
     @LocalServerPort
-    private int serverPort;
+    protected int serverPort;
 
     @BeforeEach
     @SneakyThrows
-    public void init() {
+    protected void init() {
         RestAssured.port = serverPort;
-
-        redisServer = new RedisServer(6379);
-        redisServer.start();
     }
 
     @AfterEach
-    public void tearDown() {
-        redisServer.stop();
+    protected void tearDown() {
     }
 }
